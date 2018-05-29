@@ -54,7 +54,6 @@
 		<item-type>String</item-type>
 		<label>Channel Name</label>
 		<description>Current Channel Name</description>
-		<state readOnly="true" />
 	</channel-type>
 	<channel-type id="toastType">
 		<item-type>String</item-type>
