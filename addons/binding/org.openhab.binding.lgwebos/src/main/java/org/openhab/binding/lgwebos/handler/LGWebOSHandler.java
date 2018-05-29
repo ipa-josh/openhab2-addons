@@ -30,7 +30,10 @@ import org.openhab.binding.lgwebos.internal.MediaControlPlayer;
 import org.openhab.binding.lgwebos.internal.MediaControlStop;
 import org.openhab.binding.lgwebos.internal.PowerControlPower;
 import org.openhab.binding.lgwebos.internal.TVControlChannel;
+import org.openhab.binding.lgwebos.internal.TVControlChannels;
 import org.openhab.binding.lgwebos.internal.TVControlChannelName;
+import org.openhab.binding.lgwebos.internal.TVProgramInfo;
+import org.openhab.binding.lgwebos.internal.TVProgramList;
 import org.openhab.binding.lgwebos.internal.ToastControlToast;
 import org.openhab.binding.lgwebos.internal.VolumeControlMute;
 import org.openhab.binding.lgwebos.internal.VolumeControlVolume;
@@ -67,11 +70,14 @@ public class LGWebOSHandler extends BaseThingHandler implements ConnectableDevic
         handlers.put(CHANNEL_POWER, new PowerControlPower());
         handlers.put(CHANNEL_MUTE, new VolumeControlMute());
         handlers.put(CHANNEL_CHANNEL, new TVControlChannel());
+        handlers.put(CHANNEL_CHANNELS, new TVControlChannels());
         handlers.put(CHANNEL_CHANNEL_NAME, new TVControlChannelName());
         handlers.put(CHANNEL_APP_LAUNCHER, new LauncherApplication());
         handlers.put(CHANNEL_MEDIA_STOP, new MediaControlStop());
         handlers.put(CHANNEL_TOAST, new ToastControlToast());
         handlers.put(CHANNEL_MEDIA_PLAYER, new MediaControlPlayer());
+        handlers.put(CHANNEL_PROGRAM, new TVProgramInfo());
+        handlers.put(CHANNEL_PROGRAM_LIST, new TVProgramList());
         channelHandlers = Collections.unmodifiableMap(handlers);
     }
 
