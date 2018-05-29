@@ -13,11 +13,14 @@
 			<channel id="mute" typeId="muteType" />
 			<channel id="volume" typeId="volumeType" />
 			<channel id="channel" typeId="channelType" />
+			<channel id="channels" typeId="channelsType" />
 			<channel id="channelName" typeId="channelNameChannelType" />
 			<channel id="toast" typeId="toastType" />
 			<channel id="mediaPlayer" typeId="mediaPlayerType" />
 			<channel id="mediaStop" typeId="mediaStopType" />
 			<channel id="appLauncher" typeId="appLauncherChannelType" />
+			<channel id="program" typeId="programType" />
+			<channel id="programList" typeId="programListType" />
 		</channels>
 
 		<representation-property>deviceId</representation-property>
@@ -72,6 +75,21 @@
 		<item-type>String</item-type>
 		<label>Application</label>
 		<description>Start application and monitor running applications.</description>
+	</channel-type>
+	<channel-type id="programType">
+		<item-type>String</item-type>
+		<label>Program</label>
+		<description>Current program watched (JSON).</description>
+	</channel-type>
+	<channel-type id="programListType">
+		<item-type>String</item-type>
+		<label>Program List</label>
+		<description>List of programs available (JSON).</description>
+	</channel-type>
+	<channel-type id="channelsType">
+		<item-type>String</item-type>
+		<label>Channels</label>
+		<description>List of channel names and numbers (JSON).</description>
 	</channel-type>
 
 </thing:thing-descriptions>
