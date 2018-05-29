@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
+import java.net.URL;
 
 import javax.imageio.ImageIO;
 
@@ -43,10 +44,21 @@ public class ToastControlToast extends BaseChannelHandler<Void> {
             return;
         }
         if (device.hasCapabilities(ToastControl.Show_Toast)) {
-            final String value = command.toString();
+            String value = command.toString();
             final ToastControl control = getControl(device);
             try {
-                BufferedImage bi = ImageIO.read(getClass().getResource("/openhab-logo-square.png"));
+                BufferedImage bi;
+                if (value.startsWith("@load:")) {
+                    String[] parts = value.split(" ", 2);
+                    String url = parts[0].substring(6);
+                    if (parts.length > 1)
+                        value = parts[1];
+                    else
+                        value = "";
+                    bi = ImageIO.read(new URL(url));
+                } else
+                    bi = ImageIO.read(getClass().getResource("/openhab-logo-square.png"));
+
                 try (ByteArrayOutputStream os = new ByteArrayOutputStream();
                         OutputStream b64 = Base64.getEncoder().wrap(os);) {
                     ImageIO.write(bi, "png", b64);
