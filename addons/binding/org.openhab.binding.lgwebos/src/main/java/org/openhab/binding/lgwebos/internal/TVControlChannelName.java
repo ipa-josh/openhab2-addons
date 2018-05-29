@@ -8,6 +8,7 @@
  */
 package org.openhab.binding.lgwebos.internal;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.eclipse.smarthome.core.library.types.StringType;
@@ -22,6 +23,7 @@ import com.connectsdk.service.capability.TVControl;
 import com.connectsdk.service.capability.TVControl.ChannelListener;
 import com.connectsdk.service.command.ServiceCommandError;
 import com.connectsdk.service.command.ServiceSubscription;
+
 
 /**
  * Handles TV Control Channel State. This is read only.
@@ -38,7 +40,35 @@ public class TVControlChannelName extends BaseChannelHandler<ChannelListener> {
 
     @Override
     public void onReceiveCommand(ConnectableDevice device, String channelId, LGWebOSHandler handler, Command command) {
-        // nothing to do, this is read only.
+        if (device == null) {
+            return;
+        }
+
+         if (device.hasCapabilities(TVControl.Channel_List, TVControl.Channel_Set)) {
+            final String value = command.toString();
+            final TVControl control = getControl(device);
+            control.getChannelList(new TVControl.ChannelListListener() {
+                @Override
+                public void onError(ServiceCommandError error) {
+                    logger.warn("error requesting channel list: {}.", error.getMessage());
+                }
+
+                @Override
+                public void onSuccess(List<ChannelInfo> channels) {
+                    if (logger.isDebugEnabled()) {
+                        channels.forEach(c -> logger.debug("Channel {} - {}", c.getNumber(), c.getName()));
+                    }
+                    Optional<ChannelInfo> channelInfo = channels.stream().filter(c -> c.getName().equals(value))
+                            .findFirst();
+                    if (channelInfo.isPresent()) {
+                        control.setChannel(channelInfo.get(), createDefaultResponseListener());
+                    } else {
+                        logger.warn("TV does not have a channel: {}.", value);
+                        channels.forEach(c -> logger.warn("Channel {} - {}", c.getNumber(), c.getName()));
+                    }
+                }
+            });
+        }
     }
 
     @Override
