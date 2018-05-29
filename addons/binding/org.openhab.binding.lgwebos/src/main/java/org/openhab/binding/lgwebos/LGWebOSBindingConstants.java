@@ -32,11 +32,13 @@ public class LGWebOSBindingConstants {
     public static final String CHANNEL_POWER = "power";
     public static final String CHANNEL_MUTE = "mute";
     public static final String CHANNEL_CHANNEL = "channel";
+    public static final String CHANNEL_CHANNELS = "channels";
     public static final String CHANNEL_TOAST = "toast";
     public static final String CHANNEL_CHANNEL_UP = "channelUp";
     public static final String CHANNEL_CHANNEL_DOWN = "channelDown";
     public static final String CHANNEL_CHANNEL_NAME = "channelName";
     public static final String CHANNEL_PROGRAM = "program";
+    public static final String CHANNEL_PROGRAM_LIST = "programList";
     public static final String CHANNEL_MEDIA_STOP = "mediaStop";
     public static final String CHANNEL_APP_LAUNCHER = "appLauncher";
     public static final String CHANNEL_MEDIA_PLAYER = "mediaPlayer";
