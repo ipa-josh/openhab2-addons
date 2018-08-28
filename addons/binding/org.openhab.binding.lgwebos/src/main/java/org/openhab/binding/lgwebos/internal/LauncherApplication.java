@@ -53,17 +53,36 @@ public class LauncherApplication extends BaseChannelHandler<Launcher.AppInfoList
 
                 @Override
                 public void onSuccess(List<AppInfo> appInfos) {
-                    if (logger.isDebugEnabled()) {
-                        for (AppInfo a : appInfos) {
-                            logger.debug("AppInfo {} - {}", a.getId(), a.getName());
-                        }
+                    String[] c = value.split("|", 2);
+                    if(c.length==2 && c[0].equals("youtube"))
+                    {
+                        control.launchYouTube(c[1],
+                                    LauncherApplication.this.<LaunchSession> createDefaultResponseListener());
                     }
-                    Optional<AppInfo> appInfo = appInfos.stream().filter(a -> a.getId().equals(value)).findFirst();
-                    if (appInfo.isPresent()) {
-                        control.launchApp(appInfo.get().getId(),
-                                LauncherApplication.this.<LaunchSession> createDefaultResponseListener());
-                    } else {
-                        logger.warn("TV does not support any app with id: {}.", value);
+                    else if(c.length==2 && c[0].equals("netflix"))
+                    {
+                        control.launchNetflix(c[1],
+                                    LauncherApplication.this.<LaunchSession> createDefaultResponseListener());
+                    }
+                    else if(c.length==2 && c[0].equals("browser"))
+                    {
+                        control.launchBrowser(c[1],
+                                    LauncherApplication.this.<LaunchSession> createDefaultResponseListener());
+                    }
+                    else
+                    {
+                        if (logger.isDebugEnabled()) {
+                            for (AppInfo a : appInfos) {
+                                logger.debug("AppInfo {} - {}", a.getId(), a.getName());
+                            }
+                        }
+                        Optional<AppInfo> appInfo = appInfos.stream().filter(a -> a.getId().equals(value)).findFirst();
+                        if (appInfo.isPresent()) {
+                            control.launchApp(appInfo.get().getId(),
+                                    LauncherApplication.this.<LaunchSession> createDefaultResponseListener());
+                        } else {
+                            logger.warn("TV does not support any app with id: {}.", value);
+                        }
                     }
                 }
             });
